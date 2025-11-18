@@ -32,11 +32,16 @@ add_library(${LIB_NAME} SHARED ${SRC_Include}
                                ${SRC_Srcs}
 )
 
-add_library(${SDK_TARGET_NAMESPACE}::${LIB_NAME} ALIAS ${LIB_NAME})
+add_library(${OPENDAQ_SDK_TARGET_NAMESPACE}::${LIB_NAME} ALIAS ${LIB_NAME})
+
+#target_link_libraries(${LIB_NAME} PUBLIC  ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
+#                                  PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::websocket_streaming
+#)
 
 target_link_libraries(${LIB_NAME} PUBLIC  daq::opendaq
-                                  PRIVATE daq::websocket_streaming
+                                  PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::websocket_streaming
 )
+
 
 target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
                                               $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../include>

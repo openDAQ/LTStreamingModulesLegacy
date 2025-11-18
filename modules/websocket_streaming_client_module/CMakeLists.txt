@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 set_cmake_folder_context(TARGET_FOLDER_NAME)
-project(WebsocketStreamingClientModule VERSION ${OPENDAQ_PACKAGE_VERSION} LANGUAGES C CXX)
+project(WebsocketStreamingClientModule VERSION ${REPO_VERSION} LANGUAGES C CXX)
 
 if (MSVC)
     # loss of data / precision, unsigned <--> signed
@@ -16,6 +16,6 @@ endif()
 
 add_subdirectory(src)
 
-if (OPENDAQ_ENABLE_TESTS)
+if (${REPO_OPTION_PREFIX}_ENABLE_TESTS)
     add_subdirectory(tests)
 endif()

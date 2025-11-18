@@ -6,11 +6,7 @@
 #include <opendaq/module_manager_factory.h>
 #include <opendaq/module_ptr.h>
 #include <coretypes/common.h>
-#include <gmock/gmock.h>
 #include <testutils/testutils.h>
-#include <opendaq/mock/mock_device_module.h>
-#include <opendaq/mock/mock_fb_module.h>
-#include <coreobjects/authentication_provider_factory.h>
 
 class WebsocketStreamingServerModuleTest : public testing::Test
 {
@@ -27,32 +23,6 @@ static ModulePtr CreateModule(ContextPtr context = NullContext())
     ModulePtr module;
     createWebsocketStreamingServerModule(&module, context);
     return module;
-}
-
-static InstancePtr CreateTestInstance()
-{
-    const auto logger = Logger();
-    const auto moduleManager = ModuleManager("[[none]]");
-    const auto authenticationProvider = AuthenticationProvider();
-    const auto context = Context(Scheduler(logger), logger, TypeManager(), moduleManager, authenticationProvider);
-
-    const ModulePtr deviceModule(MockDeviceModule_Create(context));
-    moduleManager.addModule(deviceModule);
-
-    const ModulePtr fbModule(MockFunctionBlockModule_Create(context));
-    moduleManager.addModule(fbModule);
-
-    const ModulePtr daqWebsocketStreamingServerModule = CreateModule(context);
-    moduleManager.addModule(daqWebsocketStreamingServerModule);
-
-    auto instance = InstanceCustom(context, "localInstance");
-    for (const auto& deviceInfo : instance.getAvailableDevices())
-        instance.addDevice(deviceInfo.getConnectionString());
-
-    for (const auto& [id, _] : instance.getAvailableFunctionBlockTypes())
-        instance.addFunctionBlock(id);
-
-    return instance;
 }
 
 static PropertyObjectPtr CreateServerConfig(const InstancePtr& instance)
@@ -132,7 +102,7 @@ TEST_F(WebsocketStreamingServerModuleTest, ServerConfig)
 
 TEST_F(WebsocketStreamingServerModuleTest, CreateServer)
 {
-    auto device = CreateTestInstance();
+    auto device = Instance();
     auto module = CreateModule(device.getContext());
     auto config = CreateServerConfig(device);
 
@@ -141,7 +111,7 @@ TEST_F(WebsocketStreamingServerModuleTest, CreateServer)
 
 TEST_F(WebsocketStreamingServerModuleTest, CreateServerFromInstance)
 {
-    auto device = CreateTestInstance();
+    auto device = Instance();
     auto config = CreateServerConfig(device);
 
     ASSERT_NO_THROW(device.addServer("OpenDAQLTStreaming", config));
