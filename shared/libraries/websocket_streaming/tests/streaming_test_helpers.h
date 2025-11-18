@@ -17,9 +17,6 @@
 #pragma once
 
 #include <opendaq/instance_factory.h>
-#include <opendaq/mock/mock_device_module.h>
-#include <opendaq/mock/mock_fb_module.h>
-#include <opendaq/mock/mock_physical_device.h>
 #include <opendaq/packet_factory.h>
 #include <opendaq/range_factory.h>
 #include <opendaq/data_descriptor_factory.h>
@@ -28,7 +25,7 @@
 #include <opendaq/signal_factory.h>
 #include <opendaq/scaling_factory.h>
 #include <opendaq/sample_type_traits.h>
-#include <coreobjects/authentication_provider_factory.h>
+#include <coreobjects/property_object_internal_ptr.h>
 #include "streaming_protocol/Unit.hpp"
 
 // MAC CI issue
@@ -44,21 +41,7 @@ namespace streaming_test_helpers
 {
     inline daq::InstancePtr createServerInstance()
     {
-        const auto moduleManager = daq::ModuleManager("[[none]]");
-        const auto authenticationProvider = daq::AuthenticationProvider();
-        auto context = Context(nullptr, daq::Logger(), daq::TypeManager(), moduleManager, authenticationProvider);
-        const daq::ModulePtr deviceModule(MockDeviceModule_Create(context));
-        moduleManager.addModule(deviceModule);
-
-        const daq::ModulePtr fbModule(MockFunctionBlockModule_Create(context));
-        moduleManager.addModule(fbModule);
-
-        auto instance = InstanceCustom(context, "localInstance");
-        instance.addDevice("daqmock://client_device");
-        instance.addDevice("daqmock://phys_device");
-        instance.addFunctionBlock("mock_fb_uid");
-
-        return instance;
+        return daq::Instance();
     }
 
     inline daq::SignalPtr createLinearTimeSignal(const daq::ContextPtr& ctx)

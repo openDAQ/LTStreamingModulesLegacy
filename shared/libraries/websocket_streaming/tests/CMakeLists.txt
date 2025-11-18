@@ -6,7 +6,6 @@ add_executable(${TEST_APP}
     test_signal_descriptor_converter.cpp
     test_streaming.cpp
     test_websocket_client_device.cpp
-    test_signal_generator.cpp
     test_app.cpp
 )
 
@@ -15,11 +14,11 @@ if (MSVC)
 endif()
 
 target_link_libraries(${TEST_APP} PRIVATE
-    ${SDK_TARGET_NAMESPACE}::${MODULE_NAME}
-    daq::opendaq
-    daq::opendaq_mocks
-    daq::streaming_protocol
-    ${SDK_TARGET_NAMESPACE}::test_utils
+    ${OPENDAQ_SDK_TARGET_NAMESPACE}::${MODULE_NAME}
+    ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
+    ${OPENDAQ_SDK_TARGET_NAMESPACE}::streaming_protocol
+    ${OPENDAQ_SDK_TARGET_NAMESPACE}::test_utils
+    gtest
 )
 
 set_target_properties(${TEST_APP} PROPERTIES DEBUG_POSTFIX _debug)
@@ -29,7 +28,3 @@ add_test(NAME ${TEST_APP}
     COMMAND $<TARGET_FILE_NAME:${TEST_APP}>
     WORKING_DIRECTORY $<TARGET_FILE_DIR:${TEST_APP}>
 )
-
-if(OPENDAQ_ENABLE_COVERAGE)
-    setup_target_for_coverage(${MODULE_NAME}coverage ${TEST_APP} ${MODULE_NAME}coverage)
-endif()

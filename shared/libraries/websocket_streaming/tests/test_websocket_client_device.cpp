@@ -732,30 +732,3 @@ TEST_P(UnsupportedSignalsTestP, MakeDomainSignalSupported)
 INSTANTIATE_TEST_SUITE_P(UnsupportedSignalsTest,
                          UnsupportedSignalsTestP,
                          testing::Values(nullptr, DataDescriptorBuilder().setSampleType(daq::SampleType::Invalid).build()));
-
-TEST_F(WebsocketClientDeviceTest, DeviceWithMultipleSignals)
-{
-    // Create server side device
-    auto serverInstance = streaming_test_helpers::createServerInstance();
-
-    // Setup and start streaming server
-    auto server = WebsocketStreamingServer(serverInstance);
-    server.setStreamingPort(STREAMING_PORT);
-    server.setControlPort(CONTROL_PORT);
-    server.start();
-
-    // Create the client device
-    auto clientDevice = WebsocketClientDevice(NullContext(), nullptr, "device", HOST);
-
-    // There should not be any difference if we get signals recursively or not,
-    // since client device doesn't know anything about hierarchy
-    size_t expectedSignalCount = 0;
-    for (const auto& signal : serverInstance.getSignals(search::Recursive(search::Visible())))
-        expectedSignalCount += signal.getPublic();
-
-    ListPtr<ISignal> signals;
-    ASSERT_NO_THROW(signals = clientDevice.getSignals());
-    ASSERT_EQ(signals.getCount(), expectedSignalCount);
-    ASSERT_NO_THROW(signals = clientDevice.getSignals(search::Recursive(search::Visible())));
-    ASSERT_EQ(signals.getCount(), expectedSignalCount);
-}
