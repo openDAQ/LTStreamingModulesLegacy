@@ -34,11 +34,7 @@ add_library(${LIB_NAME} SHARED ${SRC_Include}
 
 add_library(${OPENDAQ_SDK_TARGET_NAMESPACE}::${LIB_NAME} ALIAS ${LIB_NAME})
 
-#target_link_libraries(${LIB_NAME} PUBLIC  ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
-#                                  PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::websocket_streaming
-#)
-
-target_link_libraries(${LIB_NAME} PUBLIC  daq::opendaq
+target_link_libraries(${LIB_NAME} PUBLIC  ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
                                   PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::websocket_streaming
 )
 

@@ -34,9 +34,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 get_filename_component(ROOT_DIR ${CMAKE_SOURCE_DIR} REALPATH)
 set(FETCHCONTENT_EXTERNALS_DIR ${ROOT_DIR}/build/__external CACHE PATH "FetchContent folder prefix")
 
-#add_definitions(-DFMT_HEADER_ONLY)
-#add_compile_definitions(SPDLOG_FMT_EXTERNAL=1)
-find_package(Threads REQUIRED)
+add_definitions(-DFMT_HEADER_ONLY)
 
 # options
 option(${REPO_OPTION_PREFIX}_EXAMPLE_ENABLE_APP "Enable building example application" OFF)
