@@ -34,6 +34,31 @@ else()
     include("${openDAQ_DIR}/../../../share/cmake/opendaq_dependency.cmake")
 endif()
 
+if (MSVC AND NOT CMAKE_COMPILER_IS_CLANGXX)
+    # As above CMAKE_CXX_STANDARD but for VS
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/std:c++17>)
+
+    # suppress warnings
+    foreach (flag IN ITEMS
+        # loss of data / precision, unsigned <--> signed
+        #
+        # 'argument' : conversion from 'type1' to 'type2', possible loss of data
+        # https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-2-c4244
+        /wd4244
+        # 'var' : conversion from 'size_t' to 'type', possible loss of data
+        # https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-3-c4267
+        /wd4267
+    )
+        add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:${flag}>)
+    endforeach()
+endif()
+
+if (MSVC AND NOT CMAKE_COMPILER_IS_CLANGXX)
+    add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:/WX->)
+else()
+    add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Wno-error>)
+endif()
+
 add_subdirectory(spdlog EXCLUDE_FROM_ALL)
 add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
 add_subdirectory(streaming_protocol EXCLUDE_FROM_ALL)
