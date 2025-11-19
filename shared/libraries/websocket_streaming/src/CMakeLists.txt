@@ -58,8 +58,8 @@ target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_
                                               $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(${LIB_NAME} PUBLIC daq::streaming_protocol
-                                         daq::opendaq
+target_link_libraries(${LIB_NAME} PUBLIC ${OPENDAQ_SDK_TARGET_NAMESPACE}::streaming_protocol
+                                         ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
 )
 
 # Fix daq::streaming_protocol` not properly propagating linking requirements on Windows

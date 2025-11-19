@@ -10,7 +10,7 @@ if(NOT OPENDAQ_SDK_VERSION)
 endif()
 
 include(FetchContent)
-find_package(openDAQ ${OPENDAQ_SDK_VERSION})
+find_package(openDAQ ${OPENDAQ_SDK_VERSION} GLOBAL)
 
 if (NOT openDAQ_FOUND)
     set(OPENDAQ_ENABLE_TESTS OFF CACHE BOOL "" FORCE)
