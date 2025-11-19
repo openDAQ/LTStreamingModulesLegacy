@@ -25,13 +25,13 @@ jobs:
         run: |
           apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
 
-      - name: Checkout simple device module repo
+      - name: Checkout project repo
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch || github.event.client_payload.branch || github.ref }}
 
       - name: Configure project with CMake
-        run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build project with CMake
         run: cmake --build build/output --config Release
