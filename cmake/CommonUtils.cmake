@@ -41,6 +41,31 @@ macro(setup_repo REPO_OPTION_PREFIX)
         string(TIMESTAMP CURRENT_YEAR "%Y")
     endif()
 
+    if (UNIX AND CMAKE_SYSTEM_PROCESSOR MATCHES "^arm.*$")  #e.g. armv7l
+        set(BUILD_ARM On CACHE INTERNAL "Build for ARM architecture")
+    endif()
+
+    if (UNIX AND CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch.*$")  #e.g. aarch64
+        set(BUILD_ARM On CACHE INTERNAL "Build for ARM architecture")
+    endif()
+
+    set(BUILD_64Bit Off)
+
+    if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
+        set(BUILD_64Bit On)
+    endif()
+
+    if (UNIX AND CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch64$")  # arm architecture 64bit
+        set(BUILD_64Bit On)
+    endif()
+
+    if(BUILD_64Bit OR BUILD_ARM)
+        message(STATUS "Position independent code flag is set")
+        set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    else()
+        message(STATUS "Position independent code flag is not set")
+    endif()
+
     set(CMAKE_CXX_STANDARD 17)
     if (WIN32)
         add_compile_definitions(NOMINMAX
