@@ -8,6 +8,7 @@ jobs:
   build-and-test:
 
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
@@ -19,6 +20,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - name: Install additional dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
+
       - name: Checkout simple device module repo
         uses: actions/checkout@v4
         with:
