@@ -18,21 +18,23 @@ if (NOT openDAQ_FOUND)
     FetchContent_Declare(
         openDAQ
         GIT_REPOSITORY https://github.com/openDAQ/openDAQ.git
-        GIT_TAG v${OPENDAQ_SDK_VERSION}
+        GIT_TAG other/module-extract-prep
         GIT_PROGRESS   ON
-        SYSTEM
-        FIND_PACKAGE_ARGS ${OPENDAQ_SDK_VERSION} GLOBAL
+        SOURCE_DIR ${FETCHCONTENT_EXTERNALS_DIR}/src/openDAQ
     )
 
     FetchContent_MakeAvailable(openDAQ)
-    message(STATUS "Include opendaq_dependency macro from fetched ${FETCHCONTENT_SOURCE_DIR_OPENDAQ}/cmake/opendaq_dependency.cmake")
-    include(${FETCHCONTENT_SOURCE_DIR_OPENDAQ}/cmake/opendaq_dependency.cmake)
+
+    message(STATUS "openDAQ fetched source directory is detected as: ${openDAQ_SOURCE_DIR}")
+    # cmake incorrectly detects openDAQ_SOURCE_DIR at repo root/core/opendaq likely caused by similar targets: openDAQ (at root) vs opendaq (at root/core/opendaq), so modify path
+    include(${openDAQ_SOURCE_DIR}/../../cmake/opendaq_dependency.cmake)
 else()
     message(STATUS "Found openDAQ in ${openDAQ_DIR}")
     message(STATUS "Include opendaq_dependency macro from found ${openDAQ_DIR}/../../../share/cmake/opendaq_dependency.cmake")
     include("${openDAQ_DIR}/../../../share/cmake/opendaq_dependency.cmake")
 endif()
 
+add_subdirectory(spdlog EXCLUDE_FROM_ALL)
 add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
 add_subdirectory(streaming_protocol EXCLUDE_FROM_ALL)
 

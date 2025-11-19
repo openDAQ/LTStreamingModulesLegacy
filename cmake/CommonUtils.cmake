@@ -181,4 +181,6 @@ macro(setup_repo REPO_OPTION_PREFIX)
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
         endif()
     endif()
+
+    find_package(Git REQUIRED)
 endmacro()
