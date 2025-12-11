@@ -5,7 +5,7 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
-  build-and-test:
+  fetch-build-and-test:
 
     strategy:
       fail-fast: false
@@ -34,7 +34,62 @@ jobs:
         run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build project with CMake
+        run: cmake --build build/output --config Debug
+
+      - name: Run project tests with CMake
+        run: ctest --test-dir build/output --output-on-failure -C Debug
+
+  install-build-and-test:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            generator: Ninja
+
+          - os: windows-latest
+            generator: "Visual Studio 17 2022"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Install additional dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
+
+      - name: Setup working directories
+        run: |
+          mkdir opendaq
+          mkdir module
+
+      - name: Checkout openDAQ
+        uses: actions/checkout@v4
+        working-directory: ./opendaq
+        with:
+          repository: openDAQ/openDAQ
+          ref: other/module-extract-prep
+
+      - name: Configure, build and install opendaq
+        working-directory: ./opendaq
+        run: |
+          cmake -B build/output -S . -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=Release
+          cmake --build build/output --config Release
+          cmake --build build/output --target install
+
+      - name: Checkout project repo
+        uses: actions/checkout@v4
+        working-directory: ./module
+        with:
+          ref: ${{ github.event.inputs.branch || github.event.client_payload.branch || github.ref }}
+
+      - name: Configure project with CMake
+        working-directory: ./module
+        run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build project with CMake
         run: cmake --build build/output --config Release
 
       - name: Run project tests with CMake
-        run: ctest --test-dir build/output --output-on-failure -C Release -V
+        run: ctest --test-dir build/output --output-on-failure -C Release
