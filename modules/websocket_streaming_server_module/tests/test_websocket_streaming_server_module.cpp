@@ -8,14 +8,7 @@
 #include <coretypes/common.h>
 #include <testutils/testutils.h>
 
-class WebsocketStreamingServerModuleTest : public testing::Test
-{
-public:
-    void TearDown() override
-    {
-    }
-};
-
+using WebsocketStreamingServerModuleTest = testing::Test;
 using namespace daq;
 
 static ModulePtr CreateModule(ContextPtr context = NullContext())
