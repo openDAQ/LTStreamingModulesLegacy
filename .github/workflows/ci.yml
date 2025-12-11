@@ -74,7 +74,7 @@ jobs:
       - name: Configure, build and install opendaq
         working-directory: opendaq
         run: |
-          cmake -B build/output -S . -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=Release
+          cmake -B build/output -S . -G "${{ matrix.generator }}" -DOPENDAQ_ENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release
           cmake --build build/output --config Release
           cmake --build build/output --target install
 
