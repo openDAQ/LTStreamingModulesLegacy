@@ -23,7 +23,7 @@ jobs:
       - name: Install additional dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
-          apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
+          sudo apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
 
       - name: Checkout project repo
         uses: actions/checkout@v4
