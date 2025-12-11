@@ -48,9 +48,7 @@ public:
 
     virtual std::string id() const override
     {
-        static unsigned int id = 0;
-        return std::to_string(id);
-        ++id;
+        return "0";
     }
 
     std::vector<std::pair<int, nlohmann::json>> metaInformations;
