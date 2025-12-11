@@ -71,12 +71,24 @@ jobs:
           ref: other/module-extract-prep
           path: opendaq
 
-      - name: Configure, build and install opendaq
+      - name: Configure and build
         working-directory: opendaq
         run: |
           cmake -B build/output -S . -G "${{ matrix.generator }}" -DOPENDAQ_ENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release
           cmake --build build/output --config Release
+
+          
+      - name: Install opendaq
+        working-directory: opendaq
+        if: matrix.os == 'ubuntu-latest'
+        run: |
           sudo cmake --build build/output --target install
+          
+      - name: Install opendaq
+        working-directory: opendaq
+        if: matrix.os == 'windows-latest'
+        run: |
+          cmake --build build/output --target install
 
       - name: Checkout project repo
         uses: actions/checkout@v4
