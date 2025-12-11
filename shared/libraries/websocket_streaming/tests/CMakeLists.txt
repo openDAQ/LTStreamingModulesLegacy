@@ -17,7 +17,7 @@ target_link_libraries(${TEST_APP} PRIVATE
     ${OPENDAQ_SDK_TARGET_NAMESPACE}::${MODULE_NAME}
     ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
     ${OPENDAQ_SDK_TARGET_NAMESPACE}::streaming_protocol
-    ${OPENDAQ_SDK_TARGET_NAMESPACE}::test_utils
+    ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq_test_utils
     gtest
 )
 

@@ -59,6 +59,7 @@ else()
     add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Wno-error>)
 endif()
 
+add_subdirectory(boost)
 add_subdirectory(spdlog EXCLUDE_FROM_ALL)
 add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
 add_subdirectory(streaming_protocol EXCLUDE_FROM_ALL)

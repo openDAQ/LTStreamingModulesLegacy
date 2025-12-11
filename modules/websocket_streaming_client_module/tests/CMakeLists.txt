@@ -8,7 +8,7 @@ set(TEST_SOURCES test_websocket_streaming_client_module.cpp
 add_executable(${TEST_APP} ${TEST_SOURCES}
 )
 
-target_link_libraries(${TEST_APP} PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::test_utils gtest
+target_link_libraries(${TEST_APP} PRIVATE ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq_test_utils gtest
                                           ${OPENDAQ_SDK_TARGET_NAMESPACE}::${MODULE_NAME}
 )
 
