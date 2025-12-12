@@ -52,6 +52,8 @@ jobs:
             generator: "Visual Studio 17 2022"
 
     runs-on: ${{ matrix.os }}
+    env:
+      INSTALL_PREFIX: ${{ runner.temp }}/opendaq_install
 
     steps:
       - name: Install additional dependencies
@@ -71,34 +73,21 @@ jobs:
           ref: other/module-extract-prep
           path: opendaq
 
-      - name: Configure and build
+      - name: Configure, build and install openDAQ
         working-directory: opendaq
         run: |
           cmake -B build/output -S . -G "${{ matrix.generator }}" -DOPENDAQ_ENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release
           cmake --build build/output --config Release
+          cmake --install build/output --config Release --prefix "${{ env.INSTALL_PREFIX }}"
 
-          
-      - name: Install opendaq
-        working-directory: opendaq
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo cmake --build build/output --target install --config Release
-          
-      - name: Install opendaq
-        working-directory: opendaq
+      - name: Add DLL path (Windows only)
         if: matrix.os == 'windows-latest'
         run: |
-          cmake --build build/output --target install --config Release
-
-      - name: Checkout project repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch || github.event.client_payload.branch || github.ref }}
-          path: module
-
+          echo "${{ env.INSTALL_PREFIX }}\\bin" >> $env:GITHUB_PATH
+        
       - name: Configure project with CMake
         working-directory: module
-        run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ env.INSTALL_PREFIX }}"
 
       - name: Build project with CMake
         working-directory: module
