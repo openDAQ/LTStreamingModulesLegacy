@@ -82,13 +82,13 @@ jobs:
         working-directory: opendaq
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo cmake --build build/output --target install
+          sudo cmake --build build/output --target install --config Release
           
       - name: Install opendaq
         working-directory: opendaq
         if: matrix.os == 'windows-latest'
         run: |
-          cmake --build build/output --target install
+          cmake --build build/output --target install --config Release
 
       - name: Checkout project repo
         uses: actions/checkout@v4
