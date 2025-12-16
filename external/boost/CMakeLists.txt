@@ -1,4 +1,4 @@
-if (OPENDAQ_LINK_3RD_PARTY_LIBS_STATICALY)
+if (${REPO_OPTION_PREFIX}_LINK_3RD_PARTY_LIBS_STATICALY)
     set(BUILD_SHARED_LIBS OFF)
     set(Boost_USE_STATIC_LIBS ON CACHE BOOL "")
     message(STATUS "Linking Boost statically")
@@ -12,7 +12,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME ${OPENDAQ_LINK_RUNTIME_STATICALLY})
 set(Boost_NO_WARN_NEW_VERSIONS ON)
 
-if (OPENDAQ_LINK_RUNTIME_STATICALLY)
+if (${REPO_OPTION_PREFIX}_LINK_RUNTIME_STATICALLY)
     set(BOOST_RUNTIME_LINK static)
 else()
     set(BOOST_RUNTIME_LINK shared)
@@ -41,22 +41,9 @@ if (NOT BOOST_INCLUDE_LIBRARIES)
     set(NEEDED_LIBRARIES algorithm
                          asio
                          beast
-                         dll
                          program_options
                          uuid
-                         locale
-                         align
-
     )
-
-    if(DAQMODULES_PARQUET_RECORDER_MODULE AND MSVC)
-        list(APPEND NEEDED_LIBRARIES
-                         multiprecision
-                         predef
-                         scope_exit
-                         typeof
-        )
-    endif()
 
     set(BOOST_INCLUDE_LIBRARIES "${NEEDED_LIBRARIES}"
         CACHE STRING
@@ -90,51 +77,6 @@ if (Boost_FETCHED)
             endif()
         endif()
     endforeach()
-
-    if(DAQMODULES_PARQUET_RECORDER_MODULE)
-        set(boost_libs 
-            config
-            algorithm 
-            assert 
-            bind 
-            concept_check 
-            core 
-            detail 
-            function
-            iterator 
-            locale 
-            mpl 
-            numeric_conversion 
-            preprocessor 
-            range 
-            smart_ptr
-            static_assert 
-            throw_exception 
-            tokenizer 
-            type_traits 
-            utility 
-            mp11
-        )
-
-        if(MSVC)
-            list(APPEND boost_libs
-                    multiprecision
-                    predef
-                    scope_exit
-                    typeof
-            
-            )
-        endif()
-
-        add_library(daq::boost_headers INTERFACE IMPORTED GLOBAL)
-
-        foreach(boost_lib ${boost_libs})
-            if (TARGET Boost::${boost_lib})
-                get_target_property(include_dirs Boost::${boost_lib} INTERFACE_INCLUDE_DIRECTORIES)
-                target_include_directories(daq::boost_headers INTERFACE "${include_dirs}")
-            endif()
-        endforeach()
-    endif()
 endif()
 
 if (Boost_FOUND)

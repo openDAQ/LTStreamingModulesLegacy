@@ -40,6 +40,10 @@ add_definitions(-DFMT_HEADER_ONLY)
 option(${REPO_OPTION_PREFIX}_EXAMPLE_ENABLE_APP "Enable building example application" OFF)
 option(${REPO_OPTION_PREFIX}_ENABLE_TESTS "Enable tests" OFF)
 
+# Runtime and default 3rd party library linking options
+option(${REPO_OPTION_PREFIX}_LINK_RUNTIME_STATICALLY "Link the C++ runtime staticaly (embedd it)" OFF)
+option(${REPO_OPTION_PREFIX}_LINK_3RD_PARTY_LIBS_STATICALY "Link the 3rd party libraries staticaly (embedd it)" ON)
+
 include(CommonUtils)
 setup_repo(${REPO_OPTION_PREFIX})
 
