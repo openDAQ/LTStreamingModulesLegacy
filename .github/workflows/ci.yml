@@ -53,7 +53,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     env:
-      INSTALL_PREFIX: ${{ runner.temp }}/opendaq_install
+      INSTALL_PREFIX: ${{ github.workspace }}/opendaq_install
 
     steps:
       - name: Install additional dependencies
