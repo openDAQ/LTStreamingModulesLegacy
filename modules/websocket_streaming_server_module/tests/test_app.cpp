@@ -1,4 +1,3 @@
-#include <coreobjects/util.h>
 #include <coretypes/stringobject_factory.h>
 #include <testutils/daq_memcheck_listener.h>
 #include <testutils/testutils.h>

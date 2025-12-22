@@ -18,7 +18,7 @@ if (NOT openDAQ_FOUND)
     FetchContent_Declare(
         openDAQ
         GIT_REPOSITORY https://github.com/openDAQ/openDAQ.git
-        GIT_TAG other/module-extract-prep
+        GIT_TAG main
         GIT_PROGRESS   ON
         SOURCE_DIR ${FETCHCONTENT_EXTERNALS_DIR}/src/openDAQ
     )
