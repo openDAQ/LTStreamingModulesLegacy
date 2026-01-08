@@ -61,11 +61,6 @@ jobs:
         run: |
           sudo apt-get install -y --no-install-recommends mono-runtime libmono-system-json-microsoft4.0-cil libmono-system-data4.0-cil
 
-      - name: Setup working directories
-        run: |
-          mkdir opendaq
-          mkdir module
-
       - name: Checkout openDAQ
         uses: actions/checkout@v4
         with:
@@ -84,7 +79,13 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           echo "${{ env.INSTALL_PREFIX }}\\bin" >> $env:GITHUB_PATH
-        
+
+      - name: Checkout project repo
+        uses: actions/checkout@v4
+        with:
+          path: module
+          ref: ${{ github.event.inputs.branch || github.event.client_payload.branch || github.ref }}
+
       - name: Configure project with CMake
         working-directory: module
         run: cmake -B build/output -S . -G "${{ matrix.generator }}" -DLT_STREAMING_MODULES_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ env.INSTALL_PREFIX }}"
