@@ -1,3 +1,3 @@
-set_cmake_context()
+set_cmake_folder_context(TARGET_FOLDER_NAME)
 
 add_subdirectory(websocket_streaming)

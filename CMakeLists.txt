@@ -42,7 +42,10 @@ if (NOT ${REPO_OPTION_PREFIX}_BUILDING_AS_SUBMODULE)
 endif()
 
 if (${REPO_OPTION_PREFIX}_BUILDING_AS_SUBMODULE AND OPENDAQ_ENABLE_TESTS OR ${REPO_OPTION_PREFIX}_ENABLE_TESTS)
-#    add_subdirectory(tests)
+    if (NOT APPLE AND UNIX)
+        option(${REPO_OPTION_PREFIX}_ENABLE_SIGGEN_INTEGRATION_TESTS "Enable websocket streaming integration tests" ON)
+    endif()
+    add_subdirectory(tests)
 endif()
 
 if (${REPO_OPTION_PREFIX}_ENABLE_EXAMPLE_APP)
