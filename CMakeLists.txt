@@ -7,5 +7,5 @@ set(REPO_OPTION_PREFIX DAQMODULES_LT_STREAMING)
 
 add_subdirectory(cmake)
 
-setup_module_project(${REPO_OPTION_PREFIX} ${REPO_NAME})
-setup_module_subfolders(${REPO_OPTION_PREFIX} ${REPO_NAME})
+opendaq_setup_module_project(${REPO_OPTION_PREFIX} ${REPO_NAME})
+opendaq_setup_module_subfolders(${REPO_OPTION_PREFIX} ${REPO_NAME})
