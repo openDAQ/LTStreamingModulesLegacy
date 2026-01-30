@@ -32,7 +32,7 @@ set(SRC_PublicHeaders
 )
 
 set(INCLUDE_DIR ../include/websocket_streaming)
-prepend_include(${INCLUDE_DIR} SRC_PublicHeaders)
+opendaq_prepend_include(${INCLUDE_DIR} SRC_PublicHeaders)
 
 
 set(SRC_PrivateHeaders
