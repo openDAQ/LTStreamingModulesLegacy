@@ -36,7 +36,7 @@ cmake_dependent_option(
     ${REPO_OPTION_PREFIX}_ENABLE_SIGGEN_INTEGRATION_TESTS
     "Enable websocket streaming integration tests"
     ON
-    "${REPO_OPTION_PREFIX}_ENABLE_TESTS"
+    "${REPO_OPTION_PREFIX}_ENABLE_TESTS AND NOT WIN32"
     OFF
 )
 
