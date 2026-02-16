@@ -7,6 +7,7 @@
 #include <opendaq/module_ptr.h>
 #include <coretypes/common.h>
 #include <testutils/testutils.h>
+#include <coreobjects/authentication_provider_factory.h>
 
 using WebsocketStreamingServerModuleTest = testing::Test;
 using namespace daq;
@@ -16,6 +17,21 @@ static ModulePtr CreateModule(ContextPtr context = NullContext())
     ModulePtr module;
     createWebsocketStreamingServerModule(&module, context);
     return module;
+}
+
+static InstancePtr CreateTestInstance()
+{
+    const auto logger = Logger();
+    const auto moduleManager = ModuleManager("[[none]]");
+    const auto authenticationProvider = AuthenticationProvider();
+    const auto context = Context(Scheduler(logger), logger, TypeManager(), moduleManager, authenticationProvider);
+
+    const ModulePtr daqWebsocketStreamingServerModule = CreateModule(context);
+    moduleManager.addModule(daqWebsocketStreamingServerModule);
+
+    auto instance = InstanceCustom(context, "localInstance");
+
+    return instance;
 }
 
 static PropertyObjectPtr CreateServerConfig(const InstancePtr& instance)
@@ -95,7 +111,7 @@ TEST_F(WebsocketStreamingServerModuleTest, ServerConfig)
 
 TEST_F(WebsocketStreamingServerModuleTest, CreateServer)
 {
-    auto device = Instance();
+    auto device = CreateTestInstance();
     auto module = CreateModule(device.getContext());
     auto config = CreateServerConfig(device);
 
@@ -104,7 +120,7 @@ TEST_F(WebsocketStreamingServerModuleTest, CreateServer)
 
 TEST_F(WebsocketStreamingServerModuleTest, CreateServerFromInstance)
 {
-    auto device = Instance();
+    auto device = CreateTestInstance();
     auto config = CreateServerConfig(device);
 
     ASSERT_NO_THROW(device.addServer("OpenDAQLTStreaming", config));
