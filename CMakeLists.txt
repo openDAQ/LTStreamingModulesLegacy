@@ -74,7 +74,7 @@ if (NOT TARGET "${OPENDAQ_SDK_TARGET_NAMESPACE}::${OPENDAQ_SDK_TARGET_NAME}")
         message(STATUS "Found installed ${OPENDAQ_SDK_NAME} version: ${${OPENDAQ_SDK_NAME}_VERSION}")
     endif()
 endif()
-opendaq_complete_boost_dependency()
+add_subdirectory(external/boost)
 
 add_subdirectory(external)
 add_subdirectory(shared)
