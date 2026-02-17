@@ -6,6 +6,9 @@ set(REPO_NAME LtStreamingModulesLegacy)
 set(REPO_OPTION_PREFIX DAQMODULES_LT_STREAMING)
 
 list(APPEND CMAKE_MESSAGE_CONTEXT ${REPO_NAME})
+
+message(DEPRECATION "Legacy LT streaming modules are deprecated. Modern modules can be found at https://github.com/openDAQ/LTStreamingModulesModern")
+
 add_subdirectory(cmake)
 
 opendaq_read_file_contents("${CMAKE_CURRENT_LIST_DIR}/module_version" module_version)
