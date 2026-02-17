@@ -1,4 +1,3 @@
-#include <testutils/testutils.h>
 #include <websocket_streaming_client_module/module_dll.h>
 #include <websocket_streaming_client_module/version.h>
 
@@ -8,6 +7,8 @@
 #include <opendaq/context_factory.h>
 #include <opendaq/device_info_factory.h>
 #include <coreobjects/property_factory.h>
+
+#include <testutils/testutils.h>
 
 using WebsocketStreamingClientModuleTest = testing::Test;
 using namespace daq;

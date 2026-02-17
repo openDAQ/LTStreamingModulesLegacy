@@ -1,7 +1,7 @@
-#include <coretypes/stringobject_factory.h>
+#include <opendaq/module_manager_factory.h>
+
 #include <testutils/daq_memcheck_listener.h>
 #include <testutils/testutils.h>
-#include <opendaq/module_manager_factory.h>
 
 int main(int argc, char** args)
 {

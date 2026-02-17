@@ -6,8 +6,9 @@
 #include <opendaq/module_manager_factory.h>
 #include <opendaq/module_ptr.h>
 #include <coretypes/common.h>
-#include <testutils/testutils.h>
 #include <coreobjects/authentication_provider_factory.h>
+
+#include <testutils/testutils.h>
 
 using WebsocketStreamingServerModuleTest = testing::Test;
 using namespace daq;

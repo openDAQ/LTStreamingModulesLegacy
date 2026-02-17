@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <testutils/base_test_listener.h>
 #include <opendaq/module_manager_factory.h>
 
