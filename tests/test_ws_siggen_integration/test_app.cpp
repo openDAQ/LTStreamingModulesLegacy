@@ -1,10 +1,11 @@
 #include <coreobjects/util.h>
 #include <testutils/daq_memcheck_listener.h>
+#include <opendaq/module_manager_factory.h>
 
 int main(int argc, char** args)
 {
     {
-        ModuleManager(".");
+        daq::ModuleManager(".");
     }
     testing::InitGoogleTest(&argc, args);
 
