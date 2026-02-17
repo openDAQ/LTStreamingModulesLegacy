@@ -1,18 +1,18 @@
 include_guard(GLOBAL)
 
-opendaq_add_required_boost_libs(
+opendaq_append_required_boost_components(
     asio
     beast
 )
 
 if (${REPO_OPTION_PREFIX}_ENABLE_SIGGEN_INTEGRATION_TESTS)
-    opendaq_add_required_boost_libs(
+    opendaq_append_required_boost_components(
         program_options
     )
 endif()
 
 if (${REPO_OPTION_PREFIX}_ENABLE_CLIENT)
-    opendaq_add_required_boost_libs(
+    opendaq_append_required_boost_components(
         uuid
     )
 endif()
