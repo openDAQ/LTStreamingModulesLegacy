@@ -1,7 +1,5 @@
-#include <testutils/testutils.h>
 #include <websocket_streaming_client_module/module_dll.h>
 #include <websocket_streaming_client_module/version.h>
-#include <gmock/gmock.h>
 
 #include <opendaq/module_ptr.h>
 #include <coretypes/common.h>
@@ -9,6 +7,8 @@
 #include <opendaq/context_factory.h>
 #include <opendaq/device_info_factory.h>
 #include <coreobjects/property_factory.h>
+
+#include <testutils/testutils.h>
 
 using WebsocketStreamingClientModuleTest = testing::Test;
 using namespace daq;
@@ -96,33 +96,6 @@ TEST_F(WebsocketStreamingClientModuleTest, CreateDeviceConnectionFailed)
 
     ASSERT_THROW(module.createDevice("daq.lt://127.0.0.1", nullptr), NotFoundException);
 }
-
-//TEST_F(WebsocketStreamingClientModuleTest, CreateConnectionString)
-//{
-//    auto context = NullContext();
-//    ModulePtr module;
-//    createModule(&module, context);
-//
-//    StringPtr connectionString;
-//
-//    ServerCapabilityConfigPtr serverCapabilityIgnored = ServerCapability("test", "test", ProtocolType::Unknown);
-//    ASSERT_NO_THROW(connectionString = module.createConnectionString(serverCapabilityIgnored));
-//    ASSERT_FALSE(connectionString.assigned());
-//
-//    ServerCapabilityConfigPtr serverCapability = ServerCapability("OpenDAQLTStreaming", "OpenDAQLTStreaming", ProtocolType::Streaming);
-//    ASSERT_THROW(module.createConnectionString(serverCapability), InvalidParameterException);
-//
-//    serverCapability.addAddress("123.123.123.123");
-//    ASSERT_EQ(module.createConnectionString(serverCapability), "daq.lt://123.123.123.123:7414");
-//
-//    serverCapability.setPort(1234);
-//    ASSERT_NO_THROW(connectionString = module.createConnectionString(serverCapability));
-//    ASSERT_EQ(connectionString, "daq.lt://123.123.123.123:1234");
-//
-//    serverCapability.addProperty(StringProperty("Path", "/path"));
-//    ASSERT_NO_THROW(connectionString = module.createConnectionString(serverCapability));
-//    ASSERT_EQ(connectionString, "daq.lt://123.123.123.123:1234/path");
-//}
 
 TEST_F(WebsocketStreamingClientModuleTest, CreateStreamingWithNullArguments)
 {

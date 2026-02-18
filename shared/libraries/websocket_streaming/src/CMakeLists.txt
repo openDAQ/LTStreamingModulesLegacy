@@ -1,5 +1,5 @@
 set(BASE_NAME websocket_streaming)
-set(LIB_NAME ${SDK_TARGET_NAME}_${BASE_NAME})
+set(LIB_NAME ${OPENDAQ_SDK_TARGET_NAME}_${BASE_NAME})
 
 set(SRC_Cpp signal_descriptor_converter.cpp
             streaming_client.cpp
@@ -32,7 +32,7 @@ set(SRC_PublicHeaders
 )
 
 set(INCLUDE_DIR ../include/websocket_streaming)
-prepend_include(${INCLUDE_DIR} SRC_PublicHeaders)
+opendaq_prepend_include(${INCLUDE_DIR} SRC_PublicHeaders)
 
 
 set(SRC_PrivateHeaders
@@ -44,7 +44,7 @@ add_library(${LIB_NAME} STATIC ${SRC_Cpp}
                                ${SRC_PrivateHeaders}
 )
 
-add_library(${SDK_TARGET_NAMESPACE}::${BASE_NAME} ALIAS ${LIB_NAME})
+add_library(${OPENDAQ_SDK_TARGET_NAMESPACE}::${BASE_NAME} ALIAS ${LIB_NAME})
 
 if(BUILD_64Bit OR BUILD_ARM)
     set_target_properties(${LIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -58,8 +58,8 @@ target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_
                                               $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(${LIB_NAME} PUBLIC daq::streaming_protocol
-                                         daq::opendaq
+target_link_libraries(${LIB_NAME} PUBLIC ${OPENDAQ_SDK_TARGET_NAMESPACE}::streaming_protocol
+                                         ${OPENDAQ_SDK_TARGET_NAMESPACE}::opendaq
 )
 
 # Fix daq::streaming_protocol` not properly propagating linking requirements on Windows

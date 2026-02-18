@@ -459,7 +459,6 @@ DataType InputConstantDataSignal::convertToNumeric(const nlohmann::json& jsonNum
             throw std::out_of_range("Value out of range");
         return static_cast<DataType>(numeric);
     }
-    throw std::invalid_argument("Conversion failed - invalid sample type");
 }
 
 template<typename DataType>

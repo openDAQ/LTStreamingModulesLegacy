@@ -6,20 +6,11 @@
 #include <opendaq/module_manager_factory.h>
 #include <opendaq/module_ptr.h>
 #include <coretypes/common.h>
-#include <gmock/gmock.h>
-#include <testutils/testutils.h>
-#include <opendaq/mock/mock_device_module.h>
-#include <opendaq/mock/mock_fb_module.h>
 #include <coreobjects/authentication_provider_factory.h>
 
-class WebsocketStreamingServerModuleTest : public testing::Test
-{
-public:
-    void TearDown() override
-    {
-    }
-};
+#include <testutils/testutils.h>
 
+using WebsocketStreamingServerModuleTest = testing::Test;
 using namespace daq;
 
 static ModulePtr CreateModule(ContextPtr context = NullContext())
@@ -36,21 +27,10 @@ static InstancePtr CreateTestInstance()
     const auto authenticationProvider = AuthenticationProvider();
     const auto context = Context(Scheduler(logger), logger, TypeManager(), moduleManager, authenticationProvider);
 
-    const ModulePtr deviceModule(MockDeviceModule_Create(context));
-    moduleManager.addModule(deviceModule);
-
-    const ModulePtr fbModule(MockFunctionBlockModule_Create(context));
-    moduleManager.addModule(fbModule);
-
     const ModulePtr daqWebsocketStreamingServerModule = CreateModule(context);
     moduleManager.addModule(daqWebsocketStreamingServerModule);
 
     auto instance = InstanceCustom(context, "localInstance");
-    for (const auto& deviceInfo : instance.getAvailableDevices())
-        instance.addDevice(deviceInfo.getConnectionString());
-
-    for (const auto& [id, _] : instance.getAvailableFunctionBlockTypes())
-        instance.addFunctionBlock(id);
 
     return instance;
 }
