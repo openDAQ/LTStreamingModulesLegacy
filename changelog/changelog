@@ -2,6 +2,8 @@
 
 ## Bug fixes
 
+- [#7](https://github.com/openDAQ/LTStreamingModulesLegacy/pull/7) Fix appending dependent boost components.
+
 ## Documenation
 
 ## Misc
