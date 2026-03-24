@@ -1,4 +1,4 @@
-opendaq_get_cmake_mode(_LT_STREAMING_CMAKE_MODERN_MODE_SAVED)
+opendaq_get_cmake_mode(_LT_STREAMING_CMAKE_LEGACY_MODE_SAVED)
 opendaq_set_cmake_mode(ANCIENT)
 set(CMAKE_FOLDER external)
 list(APPEND CMAKE_MESSAGE_CONTEXT external)
@@ -15,4 +15,4 @@ add_subdirectory(spdlog EXCLUDE_FROM_ALL)
 add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
 add_subdirectory(streaming_protocol EXCLUDE_FROM_ALL)
 
-opendaq_set_cmake_mode(${_LT_STREAMING_CMAKE_MODERN_MODE_SAVED})
+opendaq_set_cmake_mode(${_LT_STREAMING_CMAKE_LEGACY_MODE_SAVED})
