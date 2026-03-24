@@ -76,7 +76,7 @@ if (NOT TARGET "${OPENDAQ_SDK_TARGET_NAMESPACE}::${OPENDAQ_SDK_TARGET_NAME}")
         FetchContent_MakeAvailable(${OPENDAQ_SDK_NAME})
     else()
         message(STATUS "Found installed ${OPENDAQ_SDK_NAME} version: ${${OPENDAQ_SDK_NAME}_VERSION}")
-        set(OPENDAQ_ALWAYS_FETCH_DEPENDENCIES OFF CACHE BOOL "" FORCE)
+        set(OPENDAQ_ALWAYS_FETCH_FMT OFF CACHE BOOL "" FORCE)
 
         # Workaround: installed openDAQ coretypes uses INSTALL_INTERFACE:fmt::fmt-header-only
         # which propagates FMT_HEADER_ONLY=1, conflicting with compiled fmt::fmt
