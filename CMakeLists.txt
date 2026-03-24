@@ -76,6 +76,15 @@ if (NOT TARGET "${OPENDAQ_SDK_TARGET_NAMESPACE}::${OPENDAQ_SDK_TARGET_NAME}")
         FetchContent_MakeAvailable(${OPENDAQ_SDK_NAME})
     else()
         message(STATUS "Found installed ${OPENDAQ_SDK_NAME} version: ${${OPENDAQ_SDK_NAME}_VERSION}")
+        set(OPENDAQ_ALWAYS_FETCH_FMT OFF CACHE BOOL "" FORCE)
+
+        # Workaround: installed openDAQ coretypes uses INSTALL_INTERFACE:fmt::fmt-header-only
+        # which propagates FMT_HEADER_ONLY=1, conflicting with compiled fmt::fmt
+        # used by spdlog (LNK2005 on MSVC). Redirect fmt-header-only to compiled fmt.
+        if (TARGET fmt::fmt-header-only AND TARGET fmt::fmt)
+            set_property(TARGET fmt::fmt-header-only PROPERTY INTERFACE_COMPILE_DEFINITIONS "")
+            target_link_libraries(fmt::fmt-header-only INTERFACE fmt::fmt)
+        endif()
     endif()
 endif()
 add_subdirectory(external/boost)
