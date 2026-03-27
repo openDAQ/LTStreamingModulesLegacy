@@ -30,6 +30,7 @@ public:
     explicit WebsocketStreamingServerImpl(const DevicePtr& rootDevice,
                                           const PropertyObjectPtr& config,
                                           const ContextPtr& context);
+    ~WebsocketStreamingServerImpl() override;
     static PropertyObjectPtr createDefaultConfig(const ContextPtr& context);
     static ServerTypePtr createType(const ContextPtr& context);
     static PropertyObjectPtr populateDefaultConfig(const PropertyObjectPtr& config, const ContextPtr& context);

@@ -13,7 +13,6 @@ BEGIN_NAMESPACE_OPENDAQ_WEBSOCKET_STREAMING
 
 WebsocketStreamingServer::~WebsocketStreamingServer()
 {
-    this->context.getOnCoreEvent() -= event(this, &WebsocketStreamingServer::coreEventCallback);
     stopInternal();
 }
 
@@ -104,7 +103,10 @@ void WebsocketStreamingServer::start()
 }
 
 void WebsocketStreamingServer::stop()
-{
+{    
+    if (stopped)
+        return;
+
     if (device.assigned() && !device.isRemoved())
     {
         const auto info = this->device.getInfo();
@@ -124,8 +126,15 @@ void WebsocketStreamingServer::stop()
 
 void WebsocketStreamingServer::stopInternal()
 {
+    if (stopped)
+        return;
+
+    this->context.getOnCoreEvent() -= event(this, &WebsocketStreamingServer::coreEventCallback);
+
     packetReader.stop();
     streamingServer.stop();
+
+    stopped = true;
 }
 
 void WebsocketStreamingServer::coreEventCallback(ComponentPtr& sender, CoreEventArgsPtr& eventArgs)

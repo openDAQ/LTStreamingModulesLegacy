@@ -23,6 +23,11 @@ WebsocketStreamingServerImpl::WebsocketStreamingServerImpl(const DevicePtr& root
     websocketStreamingServer.start();
 }
 
+WebsocketStreamingServerImpl::~WebsocketStreamingServerImpl()
+{
+    websocketStreamingServer.stop();
+}
+
 void WebsocketStreamingServerImpl::populateDefaultConfigFromProvider(const ContextPtr& context, const PropertyObjectPtr& config)
 {
     if (!context.assigned())

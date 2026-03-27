@@ -52,7 +52,9 @@ public:
 
     void start(uint16_t port = daq::streaming_protocol::WEBSOCKET_LISTENING_PORT,
                uint16_t controlPort = daq::streaming_protocol::HTTP_CONTROL_PORT);
+    
     void stop();
+    void clearCallbacks();
 
     void onAccept(const OnAcceptCallback& callback);
     void onStartSignalsRead(const OnStartSignalsReadCallback& callback);

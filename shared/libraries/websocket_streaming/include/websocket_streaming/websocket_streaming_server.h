@@ -43,6 +43,7 @@ protected:
     DevicePtr device;
     ContextPtr context;
 
+    bool stopped = false;
     uint16_t streamingPort = 0;
     uint16_t controlPort = 0;
     daq::websocket_streaming::StreamingServer streamingServer;
