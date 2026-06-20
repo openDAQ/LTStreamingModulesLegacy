@@ -104,6 +104,17 @@ void StreamingServer::stop()
 
     this->server.reset();
     this->controlServer.reset();
+
+    clearCallbacks();
+}
+
+void StreamingServer::clearCallbacks()
+{
+    onAcceptCallback = nullptr;
+    onStartSignalsReadCallback = nullptr;
+    onStopSignalsReadCallback = nullptr;
+    clientConnectedHandler = nullptr;
+    clientDisconnectedHandler = nullptr;
 }
 
 void StreamingServer::onAccept(const OnAcceptCallback& callback)
