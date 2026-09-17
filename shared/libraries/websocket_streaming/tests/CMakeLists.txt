@@ -25,6 +25,12 @@ target_link_libraries(${TEST_APP} PRIVATE
 set_target_properties(${TEST_APP} PROPERTIES DEBUG_POSTFIX _debug)
 target_include_directories(${TEST_APP} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
+opendaq_target_pch(${TEST_APP} <opendaq/opendaq.h> <gtest/gtest.h>)
+
+# test_app.cpp defines main().
+set_source_files_properties(test_app.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+opendaq_target_unity_tests(${TEST_APP} BATCH_SIZE 4)
+
 add_test(NAME ${TEST_APP}
     COMMAND $<TARGET_FILE_NAME:${TEST_APP}>
     WORKING_DIRECTORY $<TARGET_FILE_DIR:${TEST_APP}>
