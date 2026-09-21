@@ -10,3 +10,4 @@
 
 - [#3](https://github.com/openDAQ/LTStreamingModulesLegacy/pull/3) Import commit history from openDAQ SDK.
 - [#4](https://github.com/openDAQ/LTStreamingModulesLegacy/pull/4) Project initial version.
+- [#17](https://github.com/openDAQ/LTStreamingModulesLegacy/pull/17) Precompiled headers and unity builds through opendaq-cmake-utils v1.1.0.
