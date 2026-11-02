@@ -375,7 +375,7 @@ void StreamingClient::availableSignalsHandler(const nlohmann::json::const_iterat
     if (connected)
     {
         // wait for signals initialization done in a separate thread
-        backgroundContext.dispatch(
+        boost::asio::dispatch(backgroundContext,
             [this]()
             {
                 std::unique_lock<std::mutex> lock(clientMutex);
