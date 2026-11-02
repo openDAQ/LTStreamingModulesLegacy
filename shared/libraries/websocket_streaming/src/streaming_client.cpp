@@ -1,6 +1,7 @@
 #include "websocket_streaming/streaming_client.h"
 #include <websocket_streaming/signal_descriptor_converter.h>
 #include <regex>
+#include <boost/asio/dispatch.hpp>
 #include <streaming_protocol/Logging.hpp>
 #include <streaming_protocol/ProtocolHandler.hpp>
 #include "stream/WebsocketClientStream.hpp"
